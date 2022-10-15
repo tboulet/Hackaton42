@@ -62,11 +62,19 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         # Display 5 points from the labeled dataset
         plt.plot(X_labeled[y_labeled == 0, 0][:N_data], X_labeled[y_labeled == 0, 1][:N_data], 'ob')
         plt.plot(X_labeled[y_labeled == 1, 0][:N_data], X_labeled[y_labeled == 1, 1][:N_data], 'or')
+        plt.title('Labeled data')
         plt.show()
         
         plt.plot(X_unlabeled[:N_data, 0], X_unlabeled[:N_data, 1], 'o')
         for i in range(20):
             print(X_unlabeled[i])
+        plt.title('Unlabeled data')
+        plt.show()
+
+        plt.plot(X_val[:N_data, 0], X_val[:N_data, 1], 'o')
+        for i in range(20):
+            print(X_val[i])
+        plt.title('Unlabeled data')
         plt.show()
         
         

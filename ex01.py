@@ -14,6 +14,31 @@ device = torch.device("cuda" if use_cuda else "cpu")
 def cut_img(img, start_height, end_height, start_width, end_width):
 	return img[:, start_height:end_height, start_width:end_width]
 
+def deplace_bottom_img(empty_img, original, deplacement):
+	for row in range(empty_img.shape[1]):
+		if row >= deplacement:
+			empty_img[:, row, :] = original[:, row - deplacement, :]
+	return empty_img
+
+def deplace_upper_img(empty_img, original, deplacement):
+	for row in range(empty_img.shape[1]):
+		if row <= deplacement:
+			empty_img[:, row, :] = original[:, row + deplacement, :]
+	return empty_img
+
+def deplace_right_img(empty_img, original, deplacement):
+	for col in range(empty_img.shape[2]):
+		if col >= deplacement:
+			empty_img[:, :, col] = original[:, :, col - deplacement]
+	return empty_img
+
+def deplace_left_img(empty_img, original, deplacement):
+	for col in range(empty_img.shape[2]):
+		if col <= deplacement:
+			empty_img[:, :, col] = original[:, :, col + deplacement]
+	return empty_img
+
+
 dataset_name = 'datasets/01_mnist_cc'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
@@ -64,8 +89,30 @@ for i in range(X_val.shape[0]):
 #fig.suptitle('Val data example')
 #plt.show()
 
-# Split labeled data into train and test
+# Creation of new data from train set
+X_bottom = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+for i in range(X_lab_left.shape[0]):
+	X_bottom[i] = deplace_bottom_img(X_bottom[i], X_lab_left[i], 7)
+
+X_upper = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+for i in range(X_lab_left.shape[0]):
+	X_upper[i] = deplace_bottom_img(X_upper[i], X_lab_left[i], 7)
+
+X_left = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+for i in range(X_lab_left.shape[0]):
+	X_left[i] = deplace_left_img(X_left[i], X_lab_left[i], 7)
+
+X_right = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+for i in range(X_lab_left.shape[0]):
+	X_right[i] = deplace_right_img(X_right[i], X_lab_left[i], 7)
+
+# Split data
 x_train, x_test, y_train, y_test = train_test_split(X_lab_left, y_labeled)
+
+# Add new data to pure training set
+x_train = np.concatenate((x_train, X_bottom[:250], X_upper[250:500], X_left[500:750], X_right[750:1000]), axis=0)
+y_train = np.concatenate((y_train, y_labeled[:250], y_labeled[250:500], y_labeled[500:750], y_labeled[750:1000]), axis=0)
+
 x_train = torch.from_numpy(x_train).to(device).float()
 y_train = torch.from_numpy(y_train).to(device)
 x_test = torch.from_numpy(x_test).to(device).float()
