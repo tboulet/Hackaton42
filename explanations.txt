@@ -1,3 +1,10 @@
+Ex00:
+We saw that for (positive, positive) number, the class was 0 and for (negative, negative) numbers the class was 1.
+We already knew the class of the other combinations from the labelled dataset.
+It means that the features x1 and x2 are strongly correlated in the labelled dataset.
+For removing this correlation, we removed the x2 component and kept only x1 which is the decisive feature.
+We trained a simple pytorch logistic regression model. The solution produced by the model was to separate around x1 = 0.0
+We applied the model on the val dataset then.
 
 Ex01:
 Used a CNN model for prediction.
@@ -10,3 +17,10 @@ Used same CNN model for prediction as ex01.
 Same as ex01, number seems to be the one of the left according to API requests.
 Here, labels and numbers are either 0 or 2.
 Some new generated data were added to train set (either data shifted to bottom or up).
+
+
+Ex23:
+Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
+On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
+However, on the val dataset, there were 4 cluster, 2 of them not being inside the 2 training clusters. 
+So we made some requests to identify to which classes these clusters were associated and we submitted. 
