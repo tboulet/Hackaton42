@@ -3,8 +3,11 @@ import torch as torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import tqdm
+import sklearn.model_selection import train_test_split
 
-class MNIST_model():
+class MNIST_model(nn.Module):
+
 	def __init__(self, nbr_classes):
 		self.layer1 = torch.nn.Sequential(
 			nn.Conv2d(in_channels=1, out_channels=64, kernel_size=5, padding='same'),
@@ -52,17 +55,30 @@ class MNIST_model():
 		out = self.layer5(out)
 		return out
 
-	def train(self, x,y, epochs):
+	def evaluate(self, x_test, y_test):
+		self.eval()
+		with torch.no_grad():
+			y_pred = self.forward(x_test)
+		correct_test = (torch.argmax(y_pred, axis=1) == y_test).sum().item()
+		self.train()
+		return correct_test/len(x_test)
+
+	def train(self, x_train, y_train, x_test, y_test, epochs=1000, batches_size=126):
+		nb_batches = x_train.shape[0] / batches_size
 		criterion = nn.CrossEntropyLoss()
 		optimizer = optim.RMSprop(self.parameters(), lr=0.001)
 		running_loss = 0.0
-		for epoch in range(epochs):
-			inputs, labels = x, y
-			optimizer.zero_grad()
-			outputs = self.forward()
-			loss = nn.CrossEntropyLoss(outputs, labels)
-			loss.backward()
-			optimizer.step()
-			running_loss += loss.item()
-
+		for epoch in tqdm(range(epochs)):
+			for batch in range(nb_batches):
+				inputs = x_train[batch*batches_size:(batch+1)*batches_size]
+				labels = y_train[epoch*batches_size:(epoch+1)*batches_size]
+				optimizer.zero_grad()
+				outputs = self.forward(inputs)
+				correct += (torch.argmax(outputs, axis=1) == labels).sum().item()
+				loss = criterion(outputs, labels)
+				loss.backward()
+				optimizer.step()
+				running_loss += loss.item()
+			if epoch % 100 == 0:
+				print("acc train:", correct/x_train.shape[0], "| acc test:", self.evaluate((x_test, y_test)))
 
