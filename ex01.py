@@ -73,7 +73,7 @@ y_test = torch.from_numpy(y_test).to(device)
 
 # Create model for 2 classes
 model = MNIST_model()
-train(model, x_train, y_train, x_test, y_test, epochs=10) # TODO modify epochs
+train(model, x_train, y_train, x_test, y_test, epochs=20) # TODO modify epochs
 
 # Predict on val and unlabeled data and save
 try:
@@ -86,14 +86,14 @@ y_unlabeled = model.forward(x_unlabeled)
 y_unlabeled_numpy = y_unlabeled.detach().numpy()
 y_unlabeled_numpy = np.argmax(y_unlabeled_numpy, axis=1)
 df = pd.DataFrame(y_unlabeled_numpy)
-df.to_csv('./ex01_results/y_unlabeled.csv', index=False)
+df.to_csv('./ex01_results/y_unlabeled.csv', index=False, header=False)
 
 x_val = torch.from_numpy(X_val_left).to(device).float()
 y_val = model.forward(x_val)
 y_val_numpy = y_val.detach().numpy()
 y_val_numpy = np.argmax(y_val_numpy, axis=1)
 df = pd.DataFrame(y_val_numpy)
-df.to_csv('./ex01_results/y_val.csv', index=False)
+df.to_csv('./ex01_results/y_val.csv', index=False, header=False)
 
 fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 for i in range(10):

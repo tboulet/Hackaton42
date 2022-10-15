@@ -1,0 +1,6 @@
+
+Ex01:
+Used a CNN model for prediction.
+We saw that for numbers "01" the label was "0" and for "10" the label was "1" in validation set according to API requests.
+It seems like labels are the first number from the left.
+We pre-processed our data to keep only the left part of each picture, trained and predicted the labels on those partial images.
