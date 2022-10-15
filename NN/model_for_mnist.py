@@ -38,7 +38,7 @@ class MNIST_model(nn.Module):
 		)
 		self.layer4 = torch.nn.Sequential(
 			nn.Flatten(),
-			nn.Linear(64*7*7, 256),
+			nn.Linear(6272, 256),
 			nn.ReLU(),
 			nn.BatchNorm1d(256),
 			nn.Dropout(p=0.25),
@@ -52,6 +52,7 @@ class MNIST_model(nn.Module):
 		out = self.layer1(x)
 		out = self.layer2(out)
 		out = self.layer3(out)
+		print(out.shape)
 		out = self.layer4(out)
 		out = self.layer5(out)
 		return out
@@ -70,6 +71,7 @@ def train(model, x_train, y_train, x_test, y_test, epochs=1000, batches_size=126
 	optimizer = optim.RMSprop(model.parameters(), lr=0.001)
 	running_loss = 0.0
 	for epoch in tqdm(range(epochs)):
+		correct = 0
 		for batch in range(nb_batches):
 			inputs = x_train[batch*batches_size:(batch+1)*batches_size]
 			labels = y_train[epoch*batches_size:(epoch+1)*batches_size]
