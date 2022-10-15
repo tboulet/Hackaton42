@@ -24,3 +24,13 @@ Faced with embeddings, we tried to vizualize the data using TSNE by reducing the
 On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
 However, on the val dataset, there were 4 cluster, 2 of them not being inside the 2 training clusters. 
 So we made some requests to identify to which classes these clusters were associated and we submitted. 
+
+
+Ex456:
+We did the same thing as in 23 :
+"Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
+On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
+However, on the val dataset, there were 4 cluster, 2 of them not being inside the 2 training clusters. 
+So we made some requests to identify to which classes these clusters were associated and we submitted."
+But this time, there were 3 training clusters, and 6 additional validation cluster in the embeddings clustering. 
+We made 5 requests to identify 5 of the 6 clusters. We guessed the last one based on our guess on the cluster repartition (2/2/2 rather than 3/2/1) and the fact that the last unknown cluster was between two same-class known cluster.
