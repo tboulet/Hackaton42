@@ -61,12 +61,16 @@ for i in range(X_val.shape[0]):
 #plt.show()
 
 # Split labeled data into train and test
-x_train, x_test, y_train, y_test = train_test_split(X_labeled, y_labeled)
+x_train, x_test, y_train, y_test = train_test_split(X_lab_left, y_labeled)
 x_train = torch.from_numpy(x_train).to(device).float()
-y_train = torch.from_numpy(y_train).to(device).float()
+y_train = torch.from_numpy(y_train).to(device)
 x_test = torch.from_numpy(x_test).to(device).float()
-y_test = torch.from_numpy(y_test).to(device).float()
+y_test = torch.from_numpy(y_test).to(device)
 
 # Create model for 2 classes
 model = MNIST_model()
-train(model, x_train, y_train, x_test, y_test)
+train(model, x_train, y_train, x_test, y_test, epochs=20)
+
+# Predict on val and unlabeled data and save
+x_unlabeled = torch.from_numpy(X_unlab_left).to(device).float()
+y_unlabeled = model.forward(x_unlabeled)

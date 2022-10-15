@@ -38,21 +38,20 @@ class MNIST_model(nn.Module):
 		)
 		self.layer4 = torch.nn.Sequential(
 			nn.Flatten(),
-			nn.Linear(6272, 256),
+			nn.Linear(3136, 256),
 			nn.ReLU(),
 			nn.BatchNorm1d(256),
 			nn.Dropout(p=0.25),
 		)
 		self.layer5 = torch.nn.Sequential(
 			nn.Linear(256, 2),
-			nn.Softmax(),
+			nn.Softmax(dim=1),
 		)
 
 	def forward(self, x):
 		out = self.layer1(x)
 		out = self.layer2(out)
 		out = self.layer3(out)
-		print(out.shape)
 		out = self.layer4(out)
 		out = self.layer5(out)
 		return out
@@ -65,7 +64,7 @@ def evaluate(model, x_test, y_test):
 	model.train()
 	return correct_test/len(x_test)
 
-def train(model, x_train, y_train, x_test, y_test, epochs=1000, batches_size=126):
+def train(model, x_train, y_train, x_test, y_test, epochs=50, batches_size=128):
 	nb_batches = int(x_train.shape[0] / batches_size)
 	criterion = nn.CrossEntropyLoss()
 	optimizer = optim.RMSprop(model.parameters(), lr=0.001)
@@ -74,7 +73,7 @@ def train(model, x_train, y_train, x_test, y_test, epochs=1000, batches_size=126
 		correct = 0
 		for batch in range(nb_batches):
 			inputs = x_train[batch*batches_size:(batch+1)*batches_size]
-			labels = y_train[epoch*batches_size:(epoch+1)*batches_size]
+			labels = y_train[batch*batches_size:(batch+1)*batches_size]
 			optimizer.zero_grad()
 			outputs = model.forward(inputs)
 			correct += (torch.argmax(outputs, axis=1) == labels).sum().item()
@@ -82,6 +81,8 @@ def train(model, x_train, y_train, x_test, y_test, epochs=1000, batches_size=126
 			loss.backward()
 			optimizer.step()
 			running_loss += loss.item()
-		if epoch % 100 == 0:
-			print("acc train:", correct/x_train.shape[0], "| acc test:", evaluate((model, x_test, y_test)))
-
+		if epoch % 10 == 0:
+			print("accuracy train:", correct/x_train.shape[0], "| accuracy val:", evaluate(model, x_test, y_test))
+	outputs = model.forward(x_train)
+	correct = (torch.argmax(outputs, axis=1) == y_train).sum().item()
+	print("Final : accuracy train:", correct/x_train.shape[0], "| accuracy val:", evaluate(model, x_test, y_test))
