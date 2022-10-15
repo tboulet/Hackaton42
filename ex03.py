@@ -177,5 +177,3 @@ for i in range(10):
 		axs[i, j].set_title(f"Data {rd_ind}, label {y_val_numpy[rd_ind]}", fontsize=7, color='red')
 fig.suptitle('Val data example')
 plt.show()
-
-# NOTE : Data 295 of val set is a 2 but currently identified as a 0
