@@ -18,13 +18,20 @@ Same as ex01, number seems to be the one of the left according to API requests.
 Here, labels and numbers are either 0 or 2.
 Some new generated data were added to train set (either data shifted to bottom or up).
 
-
 Ex03:
 Used same CNN model for prediction as before.
 Here, there's reference image (either same 0 or 3) on a random side of image.
 We cut each image of each datasets to keep only the non-reference picture (using euclidean distance).
 As ex02, we also shift a little some of our image on vertical axis to obtain a bigger training dataset.
 
+Ex04:
+Used same CNN model for prediction as before.
+Here, there's an empty grayscale space next to a number with different grayscale background for 0 (shade of gray) and 4 (black).
+In val set, the background color is randomly assigned to both 0 and 4.
+We calculate variance for both right/left parts of pictures to keep only the part with the number.
+Our intent was to change to black every pixel value under a certain value of bright grey or use edge detection to eliminate the bias made by background color.
+But, by some weird dark magic, the cut made it for us (no, we didn't cut on the color channel).
+We also get a bigger training dataset by shifting to right/left/bottom/up some pictures.
 
 Ex23:
 Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
