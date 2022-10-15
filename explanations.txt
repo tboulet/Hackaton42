@@ -1,0 +1,60 @@
+Ex00:
+We saw that for (positive, positive) number, the class was 0 and for (negative, negative) numbers the class was 1.
+We already knew the class of the other combinations from the labelled dataset.
+It means that the features x1 and x2 are strongly correlated in the labelled dataset.
+For removing this correlation, we removed the x2 component and kept only x1 which is the decisive feature.
+We trained a simple pytorch logistic regression model. The solution produced by the model was to separate around x1 = 0.0
+We applied the model on the val dataset then.
+
+Ex01:
+Used a CNN model for prediction.
+We saw that for numbers "01" the label was "0" and for "10" the label was "1" in validation set according to API requests.
+It seems like labels are the first number from the left.
+We pre-processed our data to keep only the left part of each picture, trained and predicted the labels on those partial images.
+
+Ex02:
+Used same CNN model for prediction as ex01.
+Same as ex01, number seems to be the one of the left according to API requests.
+Here, labels and numbers are either 0 or 2.
+Some new generated data were added to train set (either data shifted to bottom or up).
+
+Ex03:
+Used same CNN model for prediction as before.
+Here, there's reference image (either same 0 or 3) on a random side of image.
+We cut each image of each datasets to keep only the non-reference picture (using euclidean distance).
+As ex02, we also shift a little some of our image on vertical axis to obtain a bigger training dataset.
+
+Ex04:
+Used same CNN model for prediction as before.
+Here, there's an empty grayscale space next to a number with different grayscale background for 0 (shade of gray) and 4 (black).
+In val set, the background color is randomly assigned to both 0 and 4.
+We calculate variance for both right/left parts of pictures to keep only the part with the number.
+Our intent was to change to black every pixel value under a certain value of bright grey or use edge detection to eliminate the bias made by background color.
+But, by some weird dark magic, the cut made it for us (no, we didn't cut on the color channel).
+We also get a bigger training dataset by shifting to right/left/bottom/up some pictures.
+
+Ex05:
+Same logic as ex04
+Used same CNN model for prediction as before.
+Here, there's an empty grayscale space next to a number with different grayscale background for 0 (shade of gray) and 5 (black).
+In val set, the background color is randomly assigned to both 0 and 5.
+We calculate variance for both right/left parts of pictures to keep only the part with the number.
+Our intent was to change to black every pixel value under a certain value of bright grey or use edge detection to eliminate the bias made by background color.
+But, by some weird dark magic, the cut made it for us (no, we didn't cut on the color channel).
+We also get a bigger training dataset by shifting to right/left/bottom/up some pictures of training set.
+
+Ex23:
+Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
+On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
+However, on the val dataset, there were 4 cluster, 2 of them not being inside the 2 training clusters. 
+So we made some requests to identify to which classes these clusters were associated and we submitted. 
+
+
+Ex456:
+We did the same thing as in 23 :
+"Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
+On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
+However, on the val dataset, there were 4 cluster, 2 of them not being inside the 2 training clusters. 
+So we made some requests to identify to which classes these clusters were associated and we submitted."
+But this time, there were 3 training clusters, and 6 additional validation cluster in the embeddings clustering. 
+We made 5 requests to identify 5 of the 6 clusters. We guessed the last one based on our guess on the cluster repartition (2/2/2 rather than 3/2/1) and the fact that the last unknown cluster was between two same-class known cluster.
