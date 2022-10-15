@@ -68,9 +68,9 @@ def train(model, x_train, y_train, x_test, y_test, epochs=50, batches_size=128):
 	nb_batches = int(x_train.shape[0] / batches_size)
 	criterion = nn.CrossEntropyLoss()
 	optimizer = optim.RMSprop(model.parameters(), lr=0.001)
-	running_loss = 0.0
 	for epoch in tqdm(range(epochs)):
 		correct = 0
+		running_loss = 0.0
 		for batch in range(nb_batches):
 			inputs = x_train[batch*batches_size:(batch+1)*batches_size]
 			labels = y_train[batch*batches_size:(batch+1)*batches_size]
