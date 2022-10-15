@@ -34,10 +34,10 @@ def load_datasets(n_dataset : int):
     
     
     # To tensor with device
-    X_labeled = torch.from_numpy(X_labeled).float().to(device)
-    y_labeled = torch.from_numpy(y_labeled).long().to(device)
-    X_unlabeled = torch.from_numpy(X_unlabeled).float().to(device)
-    X_val = torch.from_numpy(X_val).float().to(device)
+    X_labeled = torch.from_numpy(X_labeled).to(device).float()
+    y_labeled = torch.from_numpy(y_labeled).to(device).float()
+    X_unlabeled = torch.from_numpy(X_unlabeled).to(device).float()
+    X_val = torch.from_numpy(X_val).to(device).float()
     
     # Not usefull for now, we split after 
     # X_train, X_test, y_train, y_test = train_test_split(X_labeled, y_labeled)
