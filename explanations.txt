@@ -19,6 +19,13 @@ Here, labels and numbers are either 0 or 2.
 Some new generated data were added to train set (either data shifted to bottom or up).
 
 
+Ex03:
+Used same CNN model for prediction as before.
+Here, there's reference image (either same 0 or 3) on a random side of image.
+We cut each image of each datasets to keep only the non-reference picture (using euclidean distance).
+As ex02, we also shift a little some of our image on vertical axis to obtain a bigger training dataset.
+
+
 Ex23:
 Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
 On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
