@@ -66,8 +66,8 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         plt.show()
         
         plt.plot(X_unlabeled[:N_data, 0], X_unlabeled[:N_data, 1], 'o')
-        for i in range(20):
-            print(X_unlabeled[i])
+        for i in range(2000):
+            print(f"{i}: {X_val[i]}")
         plt.show()
         
         

@@ -1,11 +1,11 @@
-import json
 import requests
-
+import json
+ 
 res = requests.post("https://leaderboard42.herokuapp.com/reveal/", data={
-       'username': 'my_awesome_team',
+       'username': 'Bolo.V5',
        'password': "my_password",
        'exercise_id': 0,
-       'datum_id': 4,
+       'datum_id': 4  # label requested from the val dataset.
    })
  
 try:
@@ -14,5 +14,3 @@ try:
 except:
    print("Error")
    print(res.content)
- 
-# {'exercise_id': 0, 'datum_id': 4, 'label': 0, 'previously revealed': [12]}
