@@ -4,3 +4,9 @@ Used a CNN model for prediction.
 We saw that for numbers "01" the label was "0" and for "10" the label was "1" in validation set according to API requests.
 It seems like labels are the first number from the left.
 We pre-processed our data to keep only the left part of each picture, trained and predicted the labels on those partial images.
+
+Ex02:
+Used same CNN model for prediction as ex01.
+Same as ex01, number seems to be the one of the left according to API requests.
+Here, labels and numbers are either 0 or 2.
+Some new generated data were added to train set (either data shifted to bottom or up).
