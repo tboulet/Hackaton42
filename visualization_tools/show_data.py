@@ -1,6 +1,5 @@
 import numpy as np
 from os.path import join
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import random
 import argparse
