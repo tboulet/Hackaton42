@@ -23,7 +23,7 @@ def load_datasets(n_dataset : int):
     y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
     X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
     X_val = np.load(join(dataset_name, "X_val.npy"))
-    
+
     # To tensor with device
     X_labeled = torch.from_numpy(X_labeled).to(device).float()
     y_labeled = torch.from_numpy(y_labeled).to(device).float()
@@ -48,7 +48,7 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         plt.plot(X_labeled[y_labeled == 1, 0][:N_data], X_labeled[y_labeled == 1, 1][:N_data], 'or')
         plt.title('Labeled data')
         plt.show()
-        
+
         plt.plot(X_unlabeled[:N_data, 0], X_unlabeled[:N_data, 1], 'o')
         for i in range(20):
             print(X_unlabeled[i])
@@ -60,21 +60,21 @@ def display_dataset(n_dataset : int, N_data : int = 10):
             print(X_val[i])
         plt.title('Unlabeled data')
         plt.show()
-        
-        
+
+
 def submit_results(model, uX_val, name : str):
     # Get (P(Xi=k))i,k
     with torch.no_grad():
         y_pred = model(uX_val)
     # Get (most_probable_class_of_i)i
     pred = torch.argmax(y_pred, dim=1)
-    
+
     if len(pred.shape) == 1:    # for format such as toy (dataset 0), just round
         pred = y_pred.round().int()
     else:
         pass
-    
-    # Convert to np and then submit    
+
+    # Convert to np and then submit
     pred = pred.cpu().numpy()
     df = pd.DataFrame(pred)
     df.to_csv(f"submission_{name}.csv", header=False, index=False)
