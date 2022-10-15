@@ -4,11 +4,11 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import tqdm
-import sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 
 class MNIST_model(nn.Module):
 
-	def __init__(self, nbr_classes):
+	def __init__(self, nbr_classes, img_height, img_width):
 		self.layer1 = torch.nn.Sequential(
 			nn.Conv2d(in_channels=1, out_channels=64, kernel_size=5, padding='same'),
 			nn.ReLU(),
@@ -37,7 +37,7 @@ class MNIST_model(nn.Module):
 		)
 		self.layer4 = torch.nn.Sequential(
 			nn.Flatten(),
-			nn.Linear(64*7*14, 256),
+			nn.Linear(64*(img_height/4)*(img_width/4), 256),
 			nn.ReLU(),
 			nn.BatchNorm1d(256),
 			nn.Dropout(p=0.25),
