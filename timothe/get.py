@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
+import pandas as pd
 
 use_cuda = torch.cuda.is_available()
 use_cuda = False
@@ -68,3 +69,22 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         for i in range(20):
             print(X_unlabeled[i])
         plt.show()
+        
+        
+
+def submit_results(model, uX_val, name : str):
+    # Get (P(Xi=k))i,k
+    with torch.no_grad():
+        y_pred = model(uX_val)
+    # Get (most_probable_class_of_i)i
+    pred = torch.argmax(y_pred, dim=1)
+    
+    if len(pred.shape) == 1:    # for format such as toy (dataset 0), just round
+        pred = y_pred.round().int()
+    else:
+        pass
+    
+    # Convert to np and then submit    
+    pred = pred.cpu().numpy()
+    df = pd.DataFrame(pred)
+    df.to_csv(f"submission_{name}.csv", header=False, index=False)

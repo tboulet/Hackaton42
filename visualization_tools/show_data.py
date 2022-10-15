@@ -26,7 +26,7 @@ for i in range(10):
 		rd_ind = random.choice(range(X_labeled.shape[0]))
 		axs[i, j].imshow(X_labeled[rd_ind, 0], cmap='gray')
 		axs[i, j].axis('off')
-		axs[i, j].set_title(y_labeled[rd_ind], fontsize=7)
+		axs[i, j].set_title(f"Data {rd_ind} label {y_labeled[rd_ind]}", fontsize=7)
 fig.suptitle('Labeled data example')
 plt.show()
 
@@ -36,6 +36,7 @@ for i in range(10):
 		rd_ind = random.choice(range(X_unlabeled.shape[0]))
 		axs[i, j].imshow(X_unlabeled[rd_ind, 0], cmap='gray')
 		axs[i, j].axis('off')
+		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Unlabeled data example')
 plt.show()
 
@@ -45,5 +46,6 @@ for i in range(10):
 		rd_ind = random.choice(range(X_val.shape[0]))
 		axs[i, j].imshow(X_val[rd_ind, 0], cmap='gray', )
 		axs[i, j].axis('off')
+		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Val data example')
 plt.show()
