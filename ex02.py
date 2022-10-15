@@ -60,9 +60,6 @@ for i in range(X_labeled.shape[0]):
 X_full = np.concatenate((X_lab_left, X_bottom[:500], X_upper[500:1000]), axis=0)
 Y_full = np.concatenate((y_labeled_adapted, y_labeled_adapted[:500], y_labeled_adapted[500:1000]), axis=0)
 
-#X_full = X_lab_left
-#Y_full = y_labeled_adapted
-
 # Check cut obtained images
 #fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 #for i in range(10):
@@ -129,6 +126,17 @@ y_unlabeled_numpy[y_unlabeled_numpy == 1] = 2
 df = pd.DataFrame(y_unlabeled_numpy)
 df.to_csv('./ex02_results/y_unlabeled.csv', index=False, header=False)
 
+fig, axs = plt.subplots(10, 10, figsize=(50, 50))
+for i in range(10):
+	for j in range(10):
+		rd_ind = random.choice(range(X_val_left.shape[0]))
+		axs[i, j].imshow(X_val[rd_ind, 0], cmap='gray', )
+		axs[i, j].axis('off')
+		axs[i, j].set_title(f"Data {rd_ind}, label {y_unlabeled_numpy[rd_ind]}", fontsize=7, color='red')
+fig.suptitle('Unlabeled data example')
+plt.show()
+
+
 x_val = torch.from_numpy(X_val_left).to(device).float()
 y_val = model.forward(x_val)
 y_val_numpy = y_val.detach().numpy()
@@ -146,5 +154,3 @@ for i in range(10):
 		axs[i, j].set_title(f"Data {rd_ind}, label {y_val_numpy[rd_ind]}", fontsize=7, color='red')
 fig.suptitle('Val data example')
 plt.show()
-
-# NOTE : Data 295 of val set is a 2 but currently identified as a 0
