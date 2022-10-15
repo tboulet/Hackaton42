@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 import os
+from noise import *
 
 use_cuda = torch.cuda.is_available()
 use_cuda = False
@@ -90,28 +91,30 @@ for i in range(X_val.shape[0]):
 #plt.show()
 
 # Creation of new data from train set
-X_bottom = np.zeros((X_lab_left.shape[0], 1, 28, 28))
-for i in range(X_lab_left.shape[0]):
-	X_bottom[i] = deplace_bottom_img(X_bottom[i], X_lab_left[i], 7)
+#X_bottom = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+#for i in range(X_lab_left.shape[0]):
+#	X_bottom[i] = deplace_bottom_img(X_bottom[i], X_lab_left[i], 7)
 
-X_upper = np.zeros((X_lab_left.shape[0], 1, 28, 28))
-for i in range(X_lab_left.shape[0]):
-	X_upper[i] = deplace_bottom_img(X_upper[i], X_lab_left[i], 7)
+#X_upper = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+#for i in range(X_lab_left.shape[0]):
+#	X_upper[i] = deplace_bottom_img(X_upper[i], X_lab_left[i], 7)
 
-X_left = np.zeros((X_lab_left.shape[0], 1, 28, 28))
-for i in range(X_lab_left.shape[0]):
-	X_left[i] = deplace_left_img(X_left[i], X_lab_left[i], 7)
+#X_left = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+#for i in range(X_lab_left.shape[0]):
+#	X_left[i] = deplace_left_img(X_left[i], X_lab_left[i], 7)
 
-X_right = np.zeros((X_lab_left.shape[0], 1, 28, 28))
-for i in range(X_lab_left.shape[0]):
-	X_right[i] = deplace_right_img(X_right[i], X_lab_left[i], 7)
+#X_right = np.zeros((X_lab_left.shape[0], 1, 28, 28))
+#for i in range(X_lab_left.shape[0]):
+#	X_right[i] = deplace_right_img(X_right[i], X_lab_left[i], 7)
+
+#X_noise, y_noise = generate_random_noise(X_lab_left, y_labeled)
 
 # Split data
 x_train, x_test, y_train, y_test = train_test_split(X_lab_left, y_labeled)
 
 # Add new data to pure training set
-x_train = np.concatenate((x_train, X_bottom[:250], X_upper[250:500], X_left[500:750], X_right[750:1000]), axis=0)
-y_train = np.concatenate((y_train, y_labeled[:250], y_labeled[250:500], y_labeled[500:750], y_labeled[750:1000]), axis=0)
+#x_train = np.concatenate((x_train, X_bottom[:250], X_upper[250:500], X_left[500:750], X_right[750:1000], X_noise), axis=0)
+#y_train = np.concatenate((y_train, y_labeled[:250], y_labeled[250:500], y_labeled[500:750], y_labeled[750:1000], y_noise), axis=0)
 
 x_train = torch.from_numpy(x_train).to(device).float()
 y_train = torch.from_numpy(y_train).to(device)
@@ -120,7 +123,7 @@ y_test = torch.from_numpy(y_test).to(device)
 
 # Create model for 2 classes
 model = MNIST_model()
-train(model, x_train, y_train, x_test, y_test, epochs=20) # TODO modify epochs
+train(model, x_train, y_train, x_test, y_test, epochs=25)
 
 # Predict on val and unlabeled data and save
 try:
@@ -134,6 +137,16 @@ y_unlabeled_numpy = y_unlabeled.detach().numpy()
 y_unlabeled_numpy = np.argmax(y_unlabeled_numpy, axis=1)
 df = pd.DataFrame(y_unlabeled_numpy)
 df.to_csv('./ex01_results/y_unlabeled.csv', index=False, header=False)
+
+fig, axs = plt.subplots(10, 10, figsize=(50, 50))
+for i in range(10):
+	for j in range(10):
+		rd_ind = random.choice(range(X_val_left.shape[0]))
+		axs[i, j].imshow(X_val[rd_ind, 0], cmap='gray', )
+		axs[i, j].axis('off')
+		axs[i, j].set_title(f"Data {rd_ind}, label {y_unlabeled_numpy[rd_ind]}", fontsize=7, color='red')
+fig.suptitle('Unlabeled data example')
+plt.show()
 
 x_val = torch.from_numpy(X_val_left).to(device).float()
 y_val = model.forward(x_val)
