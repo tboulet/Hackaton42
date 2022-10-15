@@ -68,3 +68,7 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         for i in range(20):
             print(X_unlabeled[i])
         plt.show()
+        
+        
+
+def submit_results(): pass
