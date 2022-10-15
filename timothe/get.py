@@ -17,14 +17,6 @@ datasets_names = {int(datasets_name.split("_")[0]): datasets_name for datasets_n
 print(datasets_names)
 
 
-
-
-
-
-
-
-
-
 def load_datasets(n_dataset : int):
     dataset_name = join('datasets', datasets_names[n_dataset])
     X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
@@ -32,19 +24,11 @@ def load_datasets(n_dataset : int):
     X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
     X_val = np.load(join(dataset_name, "X_val.npy"))
     
-    
     # To tensor with device
     X_labeled = torch.from_numpy(X_labeled).to(device).float()
     y_labeled = torch.from_numpy(y_labeled).to(device).float()
     X_unlabeled = torch.from_numpy(X_unlabeled).to(device).float()
     X_val = torch.from_numpy(X_val).to(device).float()
-    
-    # Not usefull for now, we split after 
-    # X_train, X_test, y_train, y_test = train_test_split(X_labeled, y_labeled)
-    # X_train = torch.tensor(X_train, device=device).float()
-    # X_test = torch.tensor(X_test, device=device).float()
-    # y_train = torch.tensor(y_train, device=device)
-    # y_test = torch.tensor(y_test, device=device)
 
     return X_labeled, y_labeled, X_unlabeled, X_val
 
@@ -70,7 +54,6 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         plt.show()
         
         
-
 def submit_results(model, uX_val, name : str):
     # Get (P(Xi=k))i,k
     with torch.no_grad():
