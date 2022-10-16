@@ -12,13 +12,13 @@ use_cuda = torch.cuda.is_available()
 use_cuda = False
 device = torch.device("cuda" if use_cuda else "cpu")
 
-datasets_names = sorted(os.listdir(path='datasets'), key=lambda name: int(name[:2]))
+datasets_names = sorted(os.listdir(path='datasets2'), key=lambda name: int(name[:2]))
 datasets_names = {int(datasets_name.split("_")[0]): datasets_name for datasets_name in datasets_names}
 print(datasets_names)
 
 
 def load_datasets(n_dataset : int):
-    dataset_name = join('datasets', datasets_names[n_dataset])
+    dataset_name = join('datasets2', datasets_names[n_dataset])
     X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
     y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
     X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
@@ -47,12 +47,6 @@ def display_dataset(n_dataset : int, N_data : int = 10):
         plt.plot(X_labeled[y_labeled == 0, 0][:N_data], X_labeled[y_labeled == 0, 1][:N_data], 'ob')
         plt.plot(X_labeled[y_labeled == 1, 0][:N_data], X_labeled[y_labeled == 1, 1][:N_data], 'or')
         plt.title('Labeled data')
-        plt.show()
-
-        plt.plot(X_unlabeled[:N_data, 0], X_unlabeled[:N_data, 1], 'o')
-        for i in range(20):
-            print(X_unlabeled[i])
-        plt.title('Unlabeled data')
         plt.show()
 
         plt.plot(X_val[:N_data, 0], X_val[:N_data, 1], 'o')
