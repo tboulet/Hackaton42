@@ -42,7 +42,7 @@ def deplace_left_img(empty_img, original, deplacement):
 			empty_img[:, :, col] = original[:, :, col + deplacement]
 	return empty_img
 
-dataset_name = 'datasets/03_mnist_constant_image_random_row'
+dataset_name = 'datasets2/03_mnist_constant_image_random_row'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
 X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))

@@ -43,6 +43,12 @@ Our intent was to change to black every pixel value under a certain value of bri
 But, by some weird dark magic, the cut made it for us (no, we didn't cut on the color channel).
 We also get a bigger training dataset by shifting to right/left/bottom/up some pictures of training set.
 
+Ex12:
+Used same CNN for prediction as before.
+Here, we didn't cut the pictures as it was either set of two "1" or two "2".
+We also get a bigger training dataset by shifting to right/left/bottom/up some pictures of training set.
+
+
 Ex23:
 Faced with embeddings, we tried to vizualize the data using TSNE by reducing the dimension to 2. 
 On the training dataset we identified 2 cluster in dimension 2 which was indicating that doing K means clustering (on the embeddings) may be a good idea. 
