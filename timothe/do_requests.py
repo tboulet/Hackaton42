@@ -3,7 +3,7 @@ import requests
 
 res = requests.post("https://leaderboard42.herokuapp.com/reveal/", data={
        'username': 'Bolo.V5',
-       'password': "accesinterdit",
+       'password': '${MDP}',
        'exercise_id': 1,
        'datum_id': 129,
    })
