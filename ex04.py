@@ -91,7 +91,7 @@ fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 for i in range(10):
 	for j in range(10):
 		rd_ind = random.choice(range(X_unlab_nb.shape[0]))
-		axs[i, j].imshow(X_unlab_nb[rd_ind, 0], cmap='gray')
+		axs[i, j].imshow(X_unlab_nb[rd_ind])
 		axs[i, j].axis('off')
 		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Unlabeled data example')
@@ -101,7 +101,7 @@ fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 for i in range(10):
 	for j in range(10):
 		rd_ind = random.choice(range(X_val_nb.shape[0]))
-		axs[i, j].imshow(X_val_nb[rd_ind, 0], cmap='gray', )
+		axs[i, j].imshow(X_val_nb[rd_ind])
 		axs[i, j].axis('off')
 		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Val data example')
