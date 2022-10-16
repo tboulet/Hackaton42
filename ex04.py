@@ -41,7 +41,7 @@ def deplace_left_img(empty_img, original, deplacement):
 			empty_img[:, :, col] = original[:, :, col + deplacement]
 	return empty_img
 
-dataset_name = 'datasets/04_mnist_uniform_color_random_row'
+dataset_name = 'datasets2/04_mnist_uniform_color_random_row'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
 X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
@@ -91,7 +91,7 @@ fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 for i in range(10):
 	for j in range(10):
 		rd_ind = random.choice(range(X_unlab_nb.shape[0]))
-		axs[i, j].imshow(X_unlab_nb[rd_ind, 0], cmap='gray')
+		axs[i, j].imshow(X_unlab_nb[rd_ind, 0])
 		axs[i, j].axis('off')
 		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Unlabeled data example')
@@ -101,7 +101,7 @@ fig, axs = plt.subplots(10, 10, figsize=(50, 50))
 for i in range(10):
 	for j in range(10):
 		rd_ind = random.choice(range(X_val_nb.shape[0]))
-		axs[i, j].imshow(X_val_nb[rd_ind, 0], cmap='gray', )
+		axs[i, j].imshow(X_val_nb[rd_ind, 0])
 		axs[i, j].axis('off')
 		axs[i, j].set_title(f"Data {rd_ind}", fontsize=7)
 fig.suptitle('Val data example')
