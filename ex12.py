@@ -40,7 +40,7 @@ def deplace_left_img(empty_img, original, deplacement):
 	return empty_img
 
 
-dataset_name = 'datasets/12_mnist_mysterious'
+dataset_name = 'datasets2/12_mnist_mysterious'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
 X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
@@ -51,17 +51,21 @@ y_labeled_adapted[y_labeled == 1] = 0
 y_labeled_adapted[y_labeled == 2] = 1
 
 # Keep only left side of image for
-X_lab_left = np.zeros((X_labeled.shape[0], 1, 28, 28))
-for i in range(X_labeled.shape[0]):
-	X_lab_left[i] = cut_img(X_labeled[i], 0, 28, 0, 28)
+#X_lab_left = np.zeros((X_labeled.shape[0], 1, 28, 28))
+#for i in range(X_labeled.shape[0]):
+#	X_lab_left[i] = cut_img(X_labeled[i], 0, 28, 0, 28)
 
-X_unlab_left = np.zeros((X_unlabeled.shape[0], 1, 28, 28))
-for i in range(X_unlabeled.shape[0]):
-	X_unlab_left[i] = cut_img(X_unlabeled[i], 0, 28, 0, 28)
+#X_unlab_left = np.zeros((X_unlabeled.shape[0], 1, 28, 28))
+#for i in range(X_unlabeled.shape[0]):
+#	X_unlab_left[i] = cut_img(X_unlabeled[i], 0, 28, 0, 28)
 
-X_val_left = np.zeros((X_val.shape[0], 1, 28, 28))
-for i in range(X_val.shape[0]):
-	X_val_left[i] = cut_img(X_val[i], 0, 28, 0, 28)
+#X_val_left = np.zeros((X_val.shape[0], 1, 28, 28))
+#for i in range(X_val.shape[0]):
+#	X_val_left[i] = cut_img(X_val[i], 0, 28, 0, 28)
+
+X_lab_left = X_labeled
+X_unlab_left = X_unlabeled
+X_val_left = X_val
 
 # Check cut obtained images
 #fig, axs = plt.subplots(10, 10, figsize=(50, 50))

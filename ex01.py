@@ -40,7 +40,7 @@ def deplace_left_img(empty_img, original, deplacement):
 	return empty_img
 
 
-dataset_name = 'datasets/01_mnist_cc'
+dataset_name = 'datasets2/01_mnist_cc'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
 X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))

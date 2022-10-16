@@ -26,7 +26,7 @@ def deplace_upper_img(empty_img, original, deplacement):
 			empty_img[:, row, :] = original[:, row + deplacement, :]
 	return empty_img
 
-dataset_name = 'datasets/02_mnist_constant_image'
+dataset_name = 'datasets2/02_mnist_constant_image'
 X_labeled = np.load(join(dataset_name, "X_labeled.npy"))
 y_labeled = np.load(join(dataset_name, "y_labeled.npy"))
 X_unlabeled = np.load(join(dataset_name, "X_unlabeled.npy"))
